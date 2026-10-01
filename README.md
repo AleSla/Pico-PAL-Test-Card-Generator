@@ -24,7 +24,7 @@ There is no video chip involved. The RP2040 clocks out 8-bit samples straight fr
 | 3 | Multiburst | 1.0, 2.0, 3.0, 4.0, 4.43, 5.0 MHz sine bursts |
 | 4 | **Philips PM5544** | Circular layout, LF/reflection checks, colour bars, gratings, grayscale, Y/C delay check, coloured side signals |
 | 5 | **Telefunken FuBK** | Colour bars, grayscale, gratings, PAL test sectors, tapering triangle |
-| 6 | **Grundig VG1001** (BNT / Nova TV style) | Castellated border, centre box with colour bars, gratings, grayscale |
+| 6 | **Grundig VG1001** (Bulgarian modification, used by BNT, "Nova TV", and "7 dni TV") | Castellated border, centre box with colour bars, gratings, grayscale |
 | 7 | **UEIT** | 26×20 cell grid, colour bars, grayscale, stripes, slanted/gradient fields, gratings |
 
 Press the button to step to the next card. After card 7 it wraps to card 0.
@@ -122,8 +122,8 @@ All line buffers are 32-bit aligned, so the DMA can move four pixels at a time. 
 | `video.pio` | PIO program that outputs 8-bit pixels |
 | `pm5544.c` | Sync/blanking templates, burst generation, shared helpers (`fill_color_bar`, `apply_luma_lpf`, overlays) and the PM5544 builder |
 | `fubk.c` | Telefunken FuBK card |
-| `vg1001_bnt.c` | Grundig VG1001 (BNT / Nova TV) card |
-| `ueit.c` | UEIT card |
+| `vg1001_bnt.c` | Grundig VG1001 card (Bulgarian modification, used by BNT, "Nova TV" and "7 dni TV")|
+| `ueit.c` | UEIT card, without the corner circles (implementing them excess the hardware limits of the board) |
 | `simple_patterns.c` | EBU bars, crosshatch, checkerboard, multiburst |
 | `CMakeLists.txt` | Pico SDK build configuration |
 
@@ -134,8 +134,8 @@ The card sources are `#include`d into `main.c`, so the whole project is a single
 Requirements: Raspberry Pi Pico SDK (with `PICO_SDK_PATH` set), CMake ≥ 3.13 and an ARM GCC toolchain.
 
 ```bash
-git clone <this-repo>
-cd <this-repo>
+git clone https://github.com/AleSla/Pico-PAL-Test-Card-Generator.git
+cd Pico-PAL-Test-Card-Generator
 mkdir build && cd build
 cmake ..
 make -j
@@ -174,4 +174,4 @@ The build produces `pico_pal_generator.uf2`.
 
 ## License
 
-Add your license here (for example MIT or GPL-3.0).
+Licenced under the GPL-3.0 Licence.
