@@ -6,6 +6,12 @@ There is no video chip involved. The RP2040 clocks out 8-bit samples straight fr
 
 ## Features
 
+![Top](images/top-view.jpg)
+![Bottom](images/bottom-view.jpg)
+![Front](images/front-view.jpg)
+![Back](images/back-view.jpg)
+![Side](images/side-view.jpg)
+
 - Full PAL composite video: sync, equalising pulses, colour burst, V-switch (PAL phase alternation), interlace
 - 8 test cards, switchable at runtime with a push button
 - Pixel clock locked to a 17.734475 MHz crystal (4 × fsc), so chroma is generated with exact phase relationships
@@ -16,20 +22,24 @@ There is no video chip involved. The RP2040 clocks out 8-bit samples straight fr
 
 ## Test cards
 
-| # | Card | Notes |
-|---|------|-------|
-| 0 | EBU colour bars | 100% bars with PAL burst |
-| 1 | Crosshatch | White grid on grey |
-| 2 | Checkerboard | Black/white 47 px cells |
-| 3 | Multiburst | 1.0, 2.0, 3.0, 4.0, 4.43, 5.0 MHz sine bursts |
-| 4 | **Philips PM5544** | Circular layout, LF/reflection checks, colour bars, gratings, grayscale, Y/C delay check, coloured side signals |
-| 5 | **Telefunken FuBK** | Colour bars, grayscale, gratings, PAL test sectors, tapering triangle |
-| 6 | **Grundig VG1001** (Bulgarian modification, used by BNT, "Nova TV", and "7 dni TV") | Castellated border, centre box with colour bars, gratings, grayscale |
-| 7 | **UEIT** | 26×20 cell grid, colour bars, grayscale, stripes, slanted/gradient fields, gratings |
+| # | Image | Card | Notes |
+|---|-------|------|-------|
+| 0 | ![EBU bars](images/ebu_color.jpg) | EBU colour bars | 100% bars with PAL burst |
+| 1 | ![Crosshatch](images/grid.jpg) | Crosshatch | White grid on grey |
+| 2 | ![Checkerboard](images/checkerboard.jpg) | Checkerboard | Black/white 47 px cells |
+| 3 | ![Multiburst](images/multiburst.jpg) | Multiburst | 1.0, 2.0, 3.0, 4.0, 4.43, 5.0 MHz sine bursts |
+| 4 | ![PM5544](images/pm5544.jpg) | **Philips PM5544** | Circular layout, LF/reflection checks, colour bars, gratings, grayscale, Y/C delay check, coloured side signals |
+| 5 | ![FuBK](images/fubk.jpg) | **Telefunken FuBK** | Colour bars, grayscale, gratings, PAL test sectors, tapering triangle |
+| 6 | ![VG 1001 BUL](images/vg1001_bul.jpg) | **Grundig VG1001** (Bulgarian modification, used by BNT, "Nova TV", and "7 dni TV") | Castellated border, centre box with colour bars, gratings, grayscale |
+| 7 | ![UEIT](images/ueit.jpg) | **UEIT** | 26×20 cell grid, colour bars, grayscale, stripes, slanted/gradient fields, gratings (currently with no corner circles) |
 
 Press the button to step to the next card. After card 7 it wraps to card 0.
 
 ## Hardware
+
+### Circuit diagram
+
+![Circuit](images/circuit_diagram.png) 
 
 ### Bill of materials
 
