@@ -1,3 +1,5 @@
+[Български](README_bg.md)
+
 # Pico-PAL-Test-Card-Generator
 
 A hardware PAL (625-line, 50 Hz, interlaced) test signal generator built around a **YD-RP2040** board. It outputs a composite video signal on an RCA jack, including a digitally synthesised PAL colour subcarrier, plus a 1 kHz test tone on a second RCA jack. Eight test patterns are selectable with one push button, including the Philips **PM5544**, the Telefunken **FuBK**, the Grundig **VG1001** (Bulgarian BNT/Nova TV variant) and a **UEIT** card.
