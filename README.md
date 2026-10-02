@@ -2,7 +2,7 @@
 
 # Pico-PAL-Test-Card-Generator
 
-A hardware PAL (625-line, 50 Hz, interlaced) test signal generator built around a **YD-RP2040** board. It outputs a composite video signal on an RCA jack, including a digitally synthesised PAL colour subcarrier, plus a 1 kHz test tone on a second RCA jack. Eight test patterns are selectable with one push button, including the Philips **PM5544**, the Telefunken **FuBK**, the Grundig **VG1001** (Bulgarian BNT/Nova TV variant) and a **UEIT** card.
+A hardware PAL (625-line, 50 Hz, interlaced) test signal generator built around a **YD-RP2040** board (a clone of the official Raspberry Pi Pico RP2040 with USB Type-C interface). It outputs a composite video signal on an RCA jack, including a digitally synthesised PAL colour subcarrier, plus a 1 kHz test tone on a second RCA jack. Eight test patterns are selectable with one push button, including the Philips **PM5544**, the Telefunken **FuBK**, the Grundig **VG1001** (Bulgarian BNT/Nova TV variant) and a **UEIT** card.
 
 There is no video chip involved. The RP2040 clocks out 8-bit samples straight from RAM through PIO and DMA, at four times the PAL subcarrier frequency, into a resistor-ladder DAC. Everything, including sync, burst and chroma, is computed in software.
 
