@@ -1,10 +1,11 @@
-// 3-Tap FIR Low-Pass Filter 
+// 3-Tap FIR Low-Pass Filter (0-byte stack, bit-for-bit identical)
 void apply_luma_lpf(uint8_t *buf, int passes) {
-    uint8_t temp[1136];
     for (int p = 0; p < passes; p++) {
-        memcpy(temp, buf, 1136);
+        uint8_t prev = buf[187];
         for (int x = 188; x < 1102; x++) {
-            buf[x] = (temp[x-1] + (temp[x] << 1) + temp[x+1]) >> 2;
+            uint8_t curr = buf[x];
+            buf[x] = (uint8_t)((prev + (curr << 1) + buf[x + 1]) >> 2);
+            prev = curr;
         }
     }
 }
@@ -361,73 +362,73 @@ void build_pm5544() {
         
         // Zone 1: Top G-Y Rects & Top Outer Signals (cell_y = 2, 3)
         // Erase boundary between cell 2 (Right edge) and cell 3 (Left edge)
-        fill_side_color(buf_bg_z1_cast0[s_mod], 2, 170, 0, -50, s_mod, false, true);
-        fill_side_color(buf_bg_z1_cast1[s_mod], 2, 170, 0, -50, s_mod, false, true);
-        fill_side_color(buf_grid_z1_cast0[s_mod], 2, 170, 0, -50, s_mod, false, true);
-        fill_side_color(buf_grid_z1_cast1[s_mod], 2, 170, 0, -50, s_mod, false, true);
+        fill_side_color(buf_bg_z1_cast0[s_mod], 2, 170, 0, -44, s_mod, false, true);
+        fill_side_color(buf_bg_z1_cast1[s_mod], 2, 170, 0, -44, s_mod, false, true);
+        fill_side_color(buf_grid_z1_cast0[s_mod], 2, 170, 0, -44, s_mod, false, true);
+        fill_side_color(buf_grid_z1_cast1[s_mod], 2, 170, 0, -44, s_mod, false, true);
         
-        fill_side_color(buf_bg_z1_cast0[s_mod], 3, 170, 36, -50, s_mod, true, false);
-        fill_side_color(buf_bg_z1_cast1[s_mod], 3, 170, 36, -50, s_mod, true, false);
-        fill_side_color(buf_grid_z1_cast0[s_mod], 3, 170, 36, -50, s_mod, true, false);
-        fill_side_color(buf_grid_z1_cast1[s_mod], 3, 170, 36, -50, s_mod, true, false);
+        fill_side_color(buf_bg_z1_cast0[s_mod], 3, 170, 36, -25, s_mod, true, false);
+        fill_side_color(buf_bg_z1_cast1[s_mod], 3, 170, 36, -25, s_mod, true, false);
+        fill_side_color(buf_grid_z1_cast0[s_mod], 3, 170, 36, -25, s_mod, true, false);
+        fill_side_color(buf_grid_z1_cast1[s_mod], 3, 170, 36, -25, s_mod, true, false);
         
         // Erase boundary between cell 15 (Right edge) and cell 16 (Left edge)
-        fill_side_color(buf_bg_z1_cast0[s_mod], 15, 170, 36, -50, s_mod, false, true);
-        fill_side_color(buf_bg_z1_cast1[s_mod], 15, 170, 36, -50, s_mod, false, true);
-        fill_side_color(buf_grid_z1_cast0[s_mod], 15, 170, 36, -50, s_mod, false, true);
-        fill_side_color(buf_grid_z1_cast1[s_mod], 15, 170, 36, -50, s_mod, false, true);
+        fill_side_color(buf_bg_z1_cast0[s_mod], 15, 170, 36, -25, s_mod, false, true);
+        fill_side_color(buf_bg_z1_cast1[s_mod], 15, 170, 36, -25, s_mod, false, true);
+        fill_side_color(buf_grid_z1_cast0[s_mod], 15, 170, 36, -25, s_mod, false, true);
+        fill_side_color(buf_grid_z1_cast1[s_mod], 15, 170, 36, -25, s_mod, false, true);
         
-        fill_side_color(buf_bg_z1_cast0[s_mod], 16, 170, -50, 0, s_mod, true, false);
-        fill_side_color(buf_bg_z1_cast1[s_mod], 16, 170, -50, 0, s_mod, true, false);
-        fill_side_color(buf_grid_z1_cast0[s_mod], 16, 170, -50, 0, s_mod, true, false);
-        fill_side_color(buf_grid_z1_cast1[s_mod], 16, 170, -50, 0, s_mod, true, false);
+        fill_side_color(buf_bg_z1_cast0[s_mod], 16, 170, -44, 0, s_mod, true, false);
+        fill_side_color(buf_bg_z1_cast1[s_mod], 16, 170, -44, 0, s_mod, true, false);
+        fill_side_color(buf_grid_z1_cast0[s_mod], 16, 170, -44, 0, s_mod, true, false);
+        fill_side_color(buf_grid_z1_cast1[s_mod], 16, 170, -44, 0, s_mod, true, false);
 
         // Zone 2: Upper Mid Outer Signals (cell_y = 4, 5, 6, 7-top)
         // No adjacent blocks, preserve all outer vertical grid lines
-        fill_side_color(buf_bg_z2_cast0[s_mod], 2, 170, 0, -50, s_mod, false, false);
-        fill_side_color(buf_bg_z2_cast1[s_mod], 2, 170, 0, -50, s_mod, false, false);
-        fill_side_color(buf_grid_z2_cast0[s_mod], 2, 170, 0, -50, s_mod, false, false);
-        fill_side_color(buf_grid_z2_cast1[s_mod], 2, 170, 0, -50, s_mod, false, false);
+        fill_side_color(buf_bg_z2_cast0[s_mod], 2, 170, 0, -44, s_mod, false, false);
+        fill_side_color(buf_bg_z2_cast1[s_mod], 2, 170, 0, -44, s_mod, false, false);
+        fill_side_color(buf_grid_z2_cast0[s_mod], 2, 170, 0, -44, s_mod, false, false);
+        fill_side_color(buf_grid_z2_cast1[s_mod], 2, 170, 0, -44, s_mod, false, false);
         
-        fill_side_color(buf_bg_z2_cast0[s_mod], 16, 170, -50, 0, s_mod, false, false);
-        fill_side_color(buf_bg_z2_cast1[s_mod], 16, 170, -50, 0, s_mod, false, false);
-        fill_side_color(buf_grid_z2_cast0[s_mod], 16, 170, -50, 0, s_mod, false, false);
-        fill_side_color(buf_grid_z2_cast1[s_mod], 16, 170, -50, 0, s_mod, false, false);
+        fill_side_color(buf_bg_z2_cast0[s_mod], 16, 170, -44, 0, s_mod, false, false);
+        fill_side_color(buf_bg_z2_cast1[s_mod], 16, 170, -44, 0, s_mod, false, false);
+        fill_side_color(buf_grid_z2_cast0[s_mod], 16, 170, -44, 0, s_mod, false, false);
+        fill_side_color(buf_grid_z2_cast1[s_mod], 16, 170, -44, 0, s_mod, false, false);
 
         // Zone 3: Lower Mid Outer Signals (cell_y = 7-bot, 8, 9, 10)
         // No adjacent blocks, preserve all outer vertical grid lines
-        fill_side_color(buf_bg_z3_cast0[s_mod], 2, 170, 0, 50, s_mod, false, false);
-        fill_side_color(buf_bg_z3_cast1[s_mod], 2, 170, 0, 50, s_mod, false, false);
-        fill_side_color(buf_grid_z3_cast0[s_mod], 2, 170, 0, 50, s_mod, false, false);
-        fill_side_color(buf_grid_z3_cast1[s_mod], 2, 170, 0, 50, s_mod, false, false);
+        fill_side_color(buf_bg_z3_cast0[s_mod], 2, 170, 0, 44, s_mod, false, false);
+        fill_side_color(buf_bg_z3_cast1[s_mod], 2, 170, 0, 44, s_mod, false, false);
+        fill_side_color(buf_grid_z3_cast0[s_mod], 2, 170, 0, 44, s_mod, false, false);
+        fill_side_color(buf_grid_z3_cast1[s_mod], 2, 170, 0, 44, s_mod, false, false);
         
-        fill_side_color(buf_bg_z3_cast0[s_mod], 16, 170, 50, 0, s_mod, false, false);
-        fill_side_color(buf_bg_z3_cast1[s_mod], 16, 170, 50, 0, s_mod, false, false);
-        fill_side_color(buf_grid_z3_cast0[s_mod], 16, 170, 50, 0, s_mod, false, false);
-        fill_side_color(buf_grid_z3_cast1[s_mod], 16, 170, 50, 0, s_mod, false, false);
+        fill_side_color(buf_bg_z3_cast0[s_mod], 16, 170, 44, 0, s_mod, false, false);
+        fill_side_color(buf_bg_z3_cast1[s_mod], 16, 170, 44, 0, s_mod, false, false);
+        fill_side_color(buf_grid_z3_cast0[s_mod], 16, 170, 44, 0, s_mod, false, false);
+        fill_side_color(buf_grid_z3_cast1[s_mod], 16, 170, 44, 0, s_mod, false, false);
 
         // Zone 4: Bottom G-Y Rects & Bot Outer Signals (cell_y = 11, 12)
         // Erase boundary between cell 2 (Right edge) and cell 3 (Left edge)
-        fill_side_color(buf_bg_z4_cast0[s_mod], 2, 170, 0, 50, s_mod, false, true);
-        fill_side_color(buf_bg_z4_cast1[s_mod], 2, 170, 0, 50, s_mod, false, true);
-        fill_side_color(buf_grid_z4_cast0[s_mod], 2, 170, 0, 50, s_mod, false, true);
-        fill_side_color(buf_grid_z4_cast1[s_mod], 2, 170, 0, 50, s_mod, false, true);
+        fill_side_color(buf_bg_z4_cast0[s_mod], 2, 170, 0, 44, s_mod, false, true);
+        fill_side_color(buf_bg_z4_cast1[s_mod], 2, 170, 0, 44, s_mod, false, true);
+        fill_side_color(buf_grid_z4_cast0[s_mod], 2, 170, 0, 44, s_mod, false, true);
+        fill_side_color(buf_grid_z4_cast1[s_mod], 2, 170, 0, 44, s_mod, false, true);
         
-        fill_side_color(buf_bg_z4_cast0[s_mod], 3, 170, -36, 50, s_mod, true, false);
-        fill_side_color(buf_bg_z4_cast1[s_mod], 3, 170, -36, 50, s_mod, true, false);
-        fill_side_color(buf_grid_z4_cast0[s_mod], 3, 170, -36, 50, s_mod, true, false);
-        fill_side_color(buf_grid_z4_cast1[s_mod], 3, 170, -36, 50, s_mod, true, false);
+        fill_side_color(buf_bg_z4_cast0[s_mod], 3, 170, -36, 25, s_mod, true, false);
+        fill_side_color(buf_bg_z4_cast1[s_mod], 3, 170, -36, 25, s_mod, true, false);
+        fill_side_color(buf_grid_z4_cast0[s_mod], 3, 170, -36, 25, s_mod, true, false);
+        fill_side_color(buf_grid_z4_cast1[s_mod], 3, 170, -36, 25, s_mod, true, false);
         
         // Erase boundary between cell 15 (Right edge) and cell 16 (Left edge)
-        fill_side_color(buf_bg_z4_cast0[s_mod], 15, 170, -36, 50, s_mod, false, true);
-        fill_side_color(buf_bg_z4_cast1[s_mod], 15, 170, -36, 50, s_mod, false, true);
-        fill_side_color(buf_grid_z4_cast0[s_mod], 15, 170, -36, 50, s_mod, false, true);
-        fill_side_color(buf_grid_z4_cast1[s_mod], 15, 170, -36, 50, s_mod, false, true);
+        fill_side_color(buf_bg_z4_cast0[s_mod], 15, 170, -36, 25, s_mod, false, true);
+        fill_side_color(buf_bg_z4_cast1[s_mod], 15, 170, -36, 25, s_mod, false, true);
+        fill_side_color(buf_grid_z4_cast0[s_mod], 15, 170, -36, 25, s_mod, false, true);
+        fill_side_color(buf_grid_z4_cast1[s_mod], 15, 170, -36, 25, s_mod, false, true);
         
-        fill_side_color(buf_bg_z4_cast0[s_mod], 16, 170, 50, 0, s_mod, true, false);
-        fill_side_color(buf_bg_z4_cast1[s_mod], 16, 170, 50, 0, s_mod, true, false);
-        fill_side_color(buf_grid_z4_cast0[s_mod], 16, 170, 50, 0, s_mod, true, false);
-        fill_side_color(buf_grid_z4_cast1[s_mod], 16, 170, 50, 0, s_mod, true, false);
+        fill_side_color(buf_bg_z4_cast0[s_mod], 16, 170, 44, 0, s_mod, true, false);
+        fill_side_color(buf_bg_z4_cast1[s_mod], 16, 170, 44, 0, s_mod, true, false);
+        fill_side_color(buf_grid_z4_cast0[s_mod], 16, 170, 44, 0, s_mod, true, false);
+        fill_side_color(buf_grid_z4_cast1[s_mod], 16, 170, 44, 0, s_mod, true, false);
         
         build_template(buf_bars_cast0[s_mod], s_mod, false, false, true);
         build_template(buf_bars_cast1[s_mod], s_mod, false, false, false);
@@ -559,6 +560,59 @@ void build_pm5544() {
         overlay_center_ext(buf_bars_lower_cast1[s_mod]);
         overlay_center_ext(buf_gratings_upper_cast0[s_mod]);
         overlay_center_ext(buf_gratings_upper_cast1[s_mod]);
+        
+        pack_line_1135(buf_blank[s_mod], s_mod);
+        pack_line_1135(buf_top_bot[s_mod], s_mod);
+
+        pack_line_1135(buf_bg_blank_cast0[s_mod], s_mod);
+        pack_line_1135(buf_bg_blank_cast1[s_mod], s_mod);
+        pack_line_1135(buf_bg_z1_cast0[s_mod], s_mod);
+        pack_line_1135(buf_bg_z1_cast1[s_mod], s_mod);
+        pack_line_1135(buf_bg_z2_cast0[s_mod], s_mod);
+        pack_line_1135(buf_bg_z2_cast1[s_mod], s_mod);
+        pack_line_1135(buf_bg_z3_cast0[s_mod], s_mod);
+        pack_line_1135(buf_bg_z3_cast1[s_mod], s_mod);
+        pack_line_1135(buf_bg_z4_cast0[s_mod], s_mod);
+        pack_line_1135(buf_bg_z4_cast1[s_mod], s_mod);
+
+        pack_line_1135(buf_grid_blank_cast0[s_mod], s_mod);
+        pack_line_1135(buf_grid_blank_cast1[s_mod], s_mod);
+        pack_line_1135(buf_grid_z1_cast0[s_mod], s_mod);
+        pack_line_1135(buf_grid_z1_cast1[s_mod], s_mod);
+        pack_line_1135(buf_grid_z2_cast0[s_mod], s_mod);
+        pack_line_1135(buf_grid_z2_cast1[s_mod], s_mod);
+        pack_line_1135(buf_grid_z3_cast0[s_mod], s_mod);
+        pack_line_1135(buf_grid_z3_cast1[s_mod], s_mod);
+        pack_line_1135(buf_grid_z4_cast0[s_mod], s_mod);
+        pack_line_1135(buf_grid_z4_cast1[s_mod], s_mod);
+
+        pack_line_1135(buf_bars_cast0[s_mod], s_mod);
+        pack_line_1135(buf_bars_cast1[s_mod], s_mod);
+        pack_line_1135(buf_bars_lower_cast0[s_mod], s_mod);
+        pack_line_1135(buf_bars_lower_cast1[s_mod], s_mod);
+        pack_line_1135(buf_gratings_cast0[s_mod], s_mod);
+        pack_line_1135(buf_gratings_cast1[s_mod], s_mod);
+        pack_line_1135(buf_gratings_upper_cast0[s_mod], s_mod);
+        pack_line_1135(buf_gratings_upper_cast1[s_mod], s_mod);
+
+        pack_line_1135(buf_cross_top[s_mod], s_mod);
+        pack_line_1135(buf_cross_mid[s_mod], s_mod);
+        pack_line_1135(buf_sqwave_cast0[s_mod], s_mod);
+        pack_line_1135(buf_sqwave_cast1[s_mod], s_mod);
+        pack_line_1135(buf_gray_cast0[s_mod], s_mod);
+        pack_line_1135(buf_gray_cast1[s_mod], s_mod);
+
+        pack_line_1135(buf_top_ref_cast0[s_mod], s_mod);
+        pack_line_1135(buf_top_ref_cast1[s_mod], s_mod);
+        pack_line_1135(buf_bot_ref_cast0[s_mod], s_mod);
+        pack_line_1135(buf_bot_ref_cast1[s_mod], s_mod);
+
+        pack_line_1135(buf_top_lf_white_cast0[s_mod], s_mod);
+        pack_line_1135(buf_top_lf_white_cast1[s_mod], s_mod);
+        pack_line_1135(buf_top_lf_black_cast0[s_mod], s_mod);
+        pack_line_1135(buf_top_lf_black_cast1[s_mod], s_mod);
+        pack_line_1135(buf_yc_cast0[s_mod], s_mod);
+        pack_line_1135(buf_yc_cast1[s_mod], s_mod);
     }
 
     // MAP BASE AND SPECIAL RENDER TABLES

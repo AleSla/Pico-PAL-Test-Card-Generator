@@ -388,6 +388,45 @@ void build_ueit() {
         fill_color_bar(buf_ueit_cbars_bot[s_mod], b_start + 5*lbw, lbw, 140, -12, 50, s_mod); 
         fill_color_bar(buf_ueit_cbars_bot[s_mod], b_start + 6*lbw, lbw, 125, 35, -8, s_mod); 
         fill_color_bar(buf_ueit_cbars_bot[s_mod], b_start + 7*lbw, lbw, 116, 0, 0, s_mod); 
+        
+        pack_line_1135(buf_blank[s_mod], s_mod);
+        pack_line_1135(buf_ueit_top[s_mod], s_mod);
+        pack_line_1135(buf_ueit_bot[s_mod], s_mod);
+        pack_line_1135(buf_ueit_even[s_mod], s_mod);
+        pack_line_1135(buf_ueit_even_h[s_mod], s_mod);
+        pack_line_1135(buf_ueit_odd[s_mod], s_mod);
+        pack_line_1135(buf_ueit_odd_h[s_mod], s_mod);
+
+        pack_line_1135(buf_ueit_r2_top[s_mod], s_mod);
+        pack_line_1135(buf_ueit_r2_top_h[s_mod], s_mod);
+        pack_line_1135(buf_ueit_r2_bot[s_mod], s_mod);
+        pack_line_1135(buf_ueit_r3_top[s_mod], s_mod);
+        pack_line_1135(buf_ueit_r3_top_h[s_mod], s_mod);
+        pack_line_1135(buf_ueit_r3_bot[s_mod], s_mod);
+        pack_line_1135(buf_ueit_r4[s_mod], s_mod);
+        pack_line_1135(buf_ueit_r4_h[s_mod], s_mod);
+
+        pack_line_1135(buf_ueit_cbars_top[s_mod], s_mod);
+        pack_line_1135(buf_ueit_gray[s_mod], s_mod);
+        pack_line_1135(buf_ueit_stripes[s_mod], s_mod);
+        pack_line_1135(buf_ueit_stripes_h[s_mod], s_mod);
+        pack_line_1135(buf_ueit_slanted[s_mod], s_mod);
+        pack_line_1135(buf_ueit_slanted_h[s_mod], s_mod);
+        pack_line_1135(buf_ueit_slanted_2[s_mod], s_mod);
+        pack_line_1135(buf_ueit_slanted_2_h[s_mod], s_mod);
+        pack_line_1135(buf_ueit_gradient[s_mod], s_mod);
+        pack_line_1135(buf_ueit_gradient_h[s_mod], s_mod);
+        pack_line_1135(buf_ueit_gratings[s_mod], s_mod);
+        pack_line_1135(buf_ueit_cbars_bot[s_mod], s_mod);
+
+        pack_line_1135(buf_ueit_r15[s_mod], s_mod);
+        pack_line_1135(buf_ueit_r15_h[s_mod], s_mod);
+        pack_line_1135(buf_ueit_r16_top[s_mod], s_mod);
+        pack_line_1135(buf_ueit_r16_top_h[s_mod], s_mod);
+        pack_line_1135(buf_ueit_r16_bot[s_mod], s_mod);
+        pack_line_1135(buf_ueit_r17_top[s_mod], s_mod);
+        pack_line_1135(buf_ueit_r17_top_h[s_mod], s_mod);
+        pack_line_1135(buf_ueit_r17_bot[s_mod], s_mod);
     }
 
     // Mapping Engine

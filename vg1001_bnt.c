@@ -56,7 +56,7 @@ void fill_vg1001_grating(uint8_t *buf, int start_x, int width, float mhz) {
 void build_vg1001_bnt() {
     enable_center_outline = true;
     
-    for (int y = 0; y < 575; y++) {
+    for (int y = 0; y < 576; y++) {
         float rad_y = 230.0f;
         float rad_x = 276.0f; 
         float dy = (y - 288) / rad_y;
@@ -162,6 +162,23 @@ void build_vg1001_bnt() {
         for(int x=b_start; x<b_start+552; x++) buf_box_y2[s_mod][x] = BLACK_LEVEL;
         apply_luma_lpf(buf_grid_y2[s_mod], 2);
         apply_luma_lpf(buf_grid_y2_h[s_mod], 2);
+        
+        pack_line_1135(buf_blank[s_mod], s_mod);
+        pack_line_1135(buf_grid_cast_top[s_mod], s_mod);
+        pack_line_1135(buf_grid_cast_bot[s_mod], s_mod);
+        pack_line_1135(buf_grid_inner_even[s_mod], s_mod);
+        pack_line_1135(buf_grid_inner_even_h[s_mod], s_mod);
+        pack_line_1135(buf_grid_inner_odd[s_mod], s_mod);
+        pack_line_1135(buf_grid_inner_odd_h[s_mod], s_mod);
+        pack_line_1135(buf_grid_y2[s_mod], s_mod);
+        pack_line_1135(buf_grid_y2_h[s_mod], s_mod);
+        pack_line_1135(buf_box_y4[s_mod], s_mod);
+        pack_line_1135(buf_box_cbars[s_mod], s_mod);
+        pack_line_1135(buf_box_center[s_mod], s_mod);
+        pack_line_1135(buf_box_center_mid[s_mod], s_mod);
+        pack_line_1135(buf_box_gratings[s_mod], s_mod);
+        pack_line_1135(buf_box_gray[s_mod], s_mod);
+        pack_line_1135(buf_box_y2[s_mod], s_mod);
         
     }
 

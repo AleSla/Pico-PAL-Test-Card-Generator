@@ -200,6 +200,18 @@ void build_fubk() {
         apply_luma_lpf(buf_bg_z1_cast0[s_mod], 2);
         apply_luma_lpf(buf_cross_mid[s_mod], 2);
         for (int i = 0; i < 13; i++) apply_luma_lpf(tri_bufs[i][s_mod], 2);
+        
+        pack_line_1135(buf_blank[s_mod], s_mod);
+        pack_line_1135(buf_bg_blank_cast0[s_mod], s_mod);
+        pack_line_1135(buf_grid_blank_cast0[s_mod], s_mod);
+        pack_line_1135(buf_bars_cast0[s_mod], s_mod);
+        pack_line_1135(buf_gray_cast0[s_mod], s_mod);
+        pack_line_1135(buf_bg_z1_cast0[s_mod], s_mod);
+        pack_line_1135(buf_cross_mid[s_mod], s_mod);
+        pack_line_1135(buf_gratings_cast0[s_mod], s_mod);
+        for (int i = 0; i < 13; i++) pack_line_1135(tri_bufs[i][s_mod], s_mod);
+        pack_line_1135(buf_bg_z2_cast0[s_mod], s_mod);
+        pack_line_1135(buf_bg_z3_cast0[s_mod], s_mod);
     }
 
     // Mapping

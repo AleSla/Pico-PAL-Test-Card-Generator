@@ -1,5 +1,17 @@
 // simple_patterns.c
 
+// Specialized 4.43 MHz Infinite Notch Filter (0-byte stack, bit-for-bit identical)
+void apply_chroma_notch(uint8_t *buf) {
+    uint8_t prev2 = buf[186];
+    uint8_t prev1 = buf[187];
+    for (int x = 188; x < 1134; x++) {
+        uint8_t curr = buf[x];
+        buf[x] = (uint8_t)((prev2 + (curr << 1) + buf[x + 2]) >> 2);
+        prev2 = prev1;
+        prev1 = curr;
+    }
+}
+
 void fill_sine_burst(uint8_t *buf, int start_x, int width, float mhz) {
     float phase_inc = (mhz / 17.734475f) * 2.0f * 3.14159265f;
     for (int i = 0; i < width; i++) {
@@ -16,8 +28,13 @@ void build_ebu_bars() {
     for (int y = 0; y < 576; y++) { center_copy_dx[y] = 0; center_mask_dx[y] = 0; }
 
     for (int s_mod = 0; s_mod < 4; s_mod++) {
+        generate_hblank(buf_blank[s_mod], s_mod);
+        memset(&buf_blank[s_mod][186], BLACK_LEVEL, 1135 - 186);
+        pack_line_1135(buf_blank[s_mod], s_mod);
+
+        // RESTORE THIS: Rebuild fresh H-sync & burst before packing buf_bars_cast0
         generate_hblank(buf_bars_cast0[s_mod], s_mod);
-        for(int x = 186; x < 1136; x++) buf_bars_cast0[s_mod][x] = BLACK_LEVEL;
+        memset(&buf_bars_cast0[s_mod][186], BLACK_LEVEL, 1135 - 186);
 
         int bw = 118; 
         int start = 190;
@@ -28,7 +45,9 @@ void build_ebu_bars() {
         fill_color_bar(buf_bars_cast0[s_mod], start + 4*bw, bw, 149, 23, 42, s_mod);   
         fill_color_bar(buf_bars_cast0[s_mod], start + 5*bw, bw, 137, -12, 50, s_mod);  
         fill_color_bar(buf_bars_cast0[s_mod], start + 6*bw, bw, 125, 35, -8, s_mod);  
-        fill_color_bar(buf_bars_cast0[s_mod], start + 7*bw, bw+2, 116, 0, 0, s_mod);   
+        fill_color_bar(buf_bars_cast0[s_mod], start + 7*bw, bw+2, 116, 0, 0, s_mod); 
+        
+        pack_line_1135(buf_bars_cast0[s_mod], s_mod);
     }
 
     for (int i = 0; i < 2500; i++) {
@@ -73,6 +92,11 @@ void build_crosshatch() {
                 buf_grid_z1_cast1[s_mod][x] = (mod_x < 2) ? WHITE_LEVEL : DARK_GRAY_LEVEL; 
             }
         }
+        
+        // ANNIHILATE the 4.43 MHz square-wave harmonics on the vertical grid lines
+        apply_chroma_notch(buf_grid_z1_cast1[s_mod]); 
+        pack_line_1135(buf_grid_z1_cast0[s_mod], s_mod);
+        pack_line_1135(buf_grid_z1_cast1[s_mod], s_mod);
     }
     
     for (int i = 0; i < 2500; i++) {
@@ -123,6 +147,12 @@ void build_checkerboard() {
             buf_sqwave_cast0[s_mod][x] = (cell_x % 2 == 0) ? WHITE_LEVEL : BLACK_LEVEL;
             buf_sqwave_cast1[s_mod][x] = (cell_x % 2 == 0) ? BLACK_LEVEL : WHITE_LEVEL;
         }
+
+        // ANNIHILATE the chroma ringing on the checkerboard transitions
+        apply_chroma_notch(buf_sqwave_cast0[s_mod]); 
+        apply_chroma_notch(buf_sqwave_cast1[s_mod]); 
+        pack_line_1135(buf_sqwave_cast0[s_mod], s_mod);
+        pack_line_1135(buf_sqwave_cast1[s_mod], s_mod);
     }
 
     for (int i = 0; i < 2500; i++) {
@@ -171,12 +201,15 @@ void build_multiburst() {
         int start = 190;
         int bw = 156; 
         
+        // PURE SINE WAVES: Left unfiltered intentionally to physically test the display's Y/C separation
         fill_sine_burst(buf_gratings_cast0[s_mod], start + 0*bw, bw, 1.0f);
         fill_sine_burst(buf_gratings_cast0[s_mod], start + 1*bw, bw, 2.0f);
         fill_sine_burst(buf_gratings_cast0[s_mod], start + 2*bw, bw, 3.0f);
         fill_sine_burst(buf_gratings_cast0[s_mod], start + 3*bw, bw, 4.0f);
         fill_sine_burst(buf_gratings_cast0[s_mod], start + 4*bw, bw, 4.43f);
         fill_sine_burst(buf_gratings_cast0[s_mod], start + 5*bw, bw, 5.0f);
+        pack_line_1135(buf_gratings_cast0[s_mod], s_mod);
+        
     }
 
     for (int i = 0; i < 2500; i++) {
@@ -195,7 +228,20 @@ void build_multiburst() {
         } else if (line == 318) {
             base_table[i] = buf_eq_blank; special_table[i] = buf_eq_blank;
         } else if (line < 23 || (line > 310 && line < 336) || line > 623) {
-            base_table[i] = buf_blank[s_mod]; special_table[i] = buf_blank[s_mod]; 
+            // INJECT 5-LINE TELETEXT BLOCK INTO THE VBI 
+            if (line == 16 || line == 329) {
+                base_table[i] = buf_vbi_ttx_hdr[s_mod]; 
+                special_table[i] = buf_vbi_ttx_hdr[s_mod];
+            } else if (line == 17 || line == 330) {
+                base_table[i] = buf_vbi_ttx_row1[s_mod]; 
+                special_table[i] = buf_vbi_ttx_row1[s_mod];
+            } else if (line == 18 || line == 331) {
+                base_table[i] = buf_vbi_ttx_row2[s_mod]; 
+                special_table[i] = buf_vbi_ttx_row2[s_mod];
+            } else {
+                base_table[i] = buf_blank[s_mod]; 
+                special_table[i] = buf_blank[s_mod]; 
+            }
         } else {
             base_table[i] = buf_gratings_cast0[s_mod]; 
             special_table[i] = buf_gratings_cast0[s_mod];
